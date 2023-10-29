@@ -1,0 +1,47 @@
+version: '3.9'
+
+services:
+  php:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+      network: host
+    depends_on:
+      - database
+    volumes:
+      - .:/var/www/html:rw,cached
+      - ./docker/php/conf.d/php.dev.ini:/usr/local/etc/php/conf.d/php.ini
+    ports:
+      - "9000"
+    links:
+      - database
+
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+      network: host
+    ports:
+     - "8080:80"
+    volumes:
+      - .:/var/www/html:ro
+    depends_on:
+      - php
+
+  database:
+    image: mariadb:10.5
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "13306:3306"
+    restart: on-failure
+    volumes:
+      - ./docker/dumps:/dumps
+      - db-data:/var/lib/mysql
+      - ./docker/sql:/docker-entrypoint-initdb.d
+
+volumes:
+  db-data: {}
