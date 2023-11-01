@@ -40,8 +40,11 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
-    public function createUser(string $email, string $password): void
-    {   
+    public function createUser(User $user): void
+    {
+        $entityManager = $this->getEntityManager(); 
+        $entityManager->persist($user);
+        $entityManager->flush();
     }
 
     public function updateUser(User $user): User
@@ -52,7 +55,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     {
     }
 
-    public function findUser(string $email, string $password): ?User
+    public function findUser(User $user): ?User
     {
     }
 }
