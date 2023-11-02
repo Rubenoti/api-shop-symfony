@@ -15,20 +15,13 @@ class RegisterController extends AbstractController
     {
         try {
             $data = $request->getContent();
-            $email = $data['email'];
-            $password = $data['password'];
+            $result = json_decode($data, true);
 
-            if (!isset($email) || !isset($password)) {
+            if (!isset($result['email']) || !isset($result['password'])) {
                 throw new BadRequestException('Parametros incorrectos');
             }
-            
-            $user = new User();
-            $user->setEmail($email);
-            $user->setPassword($password);
-            
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $email = $result['email'];
+            $password = $result['password'];
 
             return new Response('Usuario creado', Response::HTTP_OK);
 
