@@ -20,8 +20,11 @@ class RegisterController extends AbstractController
             if (!isset($result['email']) || !isset($result['password'])) {
                 throw new BadRequestException('Parametros incorrectos');
             }
+
             $email = $result['email'];
             $password = $result['password'];
+
+            
 
             return new Response('Usuario creado', Response::HTTP_OK);
 
