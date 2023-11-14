@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Controller;
+namespace App\Infrastructure\Controller;
 
+use App\Application\Register\RegisterUserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,6 +12,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class RegisterController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
+    public function __construct(
+        private readonly RegisterUserService $service
+    ) {
+
+    }
+
     public function __invoke(Request $request): Response
     {
         try {
@@ -24,8 +31,8 @@ class RegisterController extends AbstractController
             $email = $result['email'];
             $password = $result['password'];
 
+            $this->service->createUser($email, $password);
             
-
             return new Response('Usuario creado', Response::HTTP_OK);
 
         } catch (\Exception $e) {

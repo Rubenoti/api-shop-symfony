@@ -4,7 +4,7 @@ controllers:
         namespace: App\Controller
     type: attribute
 
-Login:
+Register:
    path: /register
-   controller: App\Controller\RegisterController::__invoke
+   controller: App\Infrastructure\Controller\RegisterController::__invoke
    methods: [POST]
