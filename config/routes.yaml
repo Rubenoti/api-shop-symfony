@@ -1,10 +1,15 @@
 controllers:
     resource:
-        path: ../src/Controller/
-        namespace: App\Controller
+        path: ../src/Infrastructure/Controller
+        namespace: App\Infrastructure\Controller
     type: attribute
 
 Register:
    path: /register
    controller: App\Infrastructure\Controller\RegisterController::__invoke
    methods: [POST]
+
+Login:
+    path: /login
+    controller: App\Infrastructure\Controller\LoginController::__invoke
+    methods: [POST]

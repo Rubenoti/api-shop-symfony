@@ -8,16 +8,16 @@ use App\Infrastructure\Doctrine\UserRepository;
 class RegisterUserService
 {
     public function __construct(
-        private readonly UserRepository $repository,
-        private readonly User $user
+        private UserRepository $repository,
         ) {
     }
 
     public function createUser(string $email, string $password): void
     {
-       $this->user->setEmail($email);
-       $this->user->setPassword($password);
+       $user = new User();
+       $user->setEmail($email);
+       $user->setPassword($password);
 
-       $this->repository->createUser($this->user);
+       $this->repository->createUser($user);
     }
 }

@@ -11,13 +11,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RegisterController extends AbstractController
 {
-    #[Route('/register', name: 'app_register')]
+    
     public function __construct(
-        private readonly RegisterUserService $service
+        private RegisterUserService $service
     ) {
-
     }
-
+   
     public function __invoke(Request $request): Response
     {
         try {
