@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 class RegisterController extends AbstractController
 {
@@ -26,6 +25,8 @@ class RegisterController extends AbstractController
             if (!isset($result['email']) || !isset($result['password'])) {
                 throw new BadRequestException('Parametros incorrectos');
             }
+
+            $request->headers->all();
 
             $email = $result['email'];
             $password = $result['password'];
